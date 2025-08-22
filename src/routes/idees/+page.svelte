@@ -15,9 +15,8 @@
   /** @type {Idea[]} */
   let ideas = [];
   let isLoading = true;
-  // EXPLICATION : On indique que cette variable peut être un nombre OU null.
-/** @type {number | null} */
-let activeIdeaId = null;
+  /** @type {number | null} */
+  let activeIdeaId = null;
 
   onMount(async () => {
     try {
@@ -70,11 +69,7 @@ let activeIdeaId = null;
 
   /** @param {number} ideaId */
   function toggleComments(ideaId) {
-    if (activeIdeaId === ideaId) {
-      activeIdeaId = null; // Si on clique sur la même idée, on ferme
-    } else {
-      activeIdeaId = ideaId; // Sinon, on ouvre la nouvelle
-    }
+    activeIdeaId = activeIdeaId === ideaId ? null : ideaId;
   }
 </script>
 
@@ -85,16 +80,17 @@ let activeIdeaId = null;
 <main class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 p-4 sm:p-8 font-sans">
   <div class="max-w-3xl mx-auto">
     
-    <div class="grid grid-cols-[1fr_auto_1fr] gap-4 items-center mb-8 w-full">
-      <div class="flex justify-start">
+    <div class="flex flex-col items-center gap-4 mb-8 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:gap-4 sm:w-full">
+      
+      <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 text-center order-1">
+        Classement des Idées
+      </h1>
+
+      <div class="flex justify-center sm:justify-start order-2 sm:order-none sm:col-start-1">
         <a href="/" class="bg-white px-4 py-2 rounded-lg shadow-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors whitespace-nowrap">
           ← Proposer une idée
         </a>
       </div>
-      <h1 class="text-4xl font-bold text-slate-800 text-center">
-        Classement des Idées
-      </h1>
-      <div></div>
     </div>
     
     {#if isLoading}
@@ -109,27 +105,30 @@ let activeIdeaId = null;
         {#each ideas as idea, index (idea.id)}
           <div class="bg-white p-5 rounded-xl shadow-lg">
             <div class="flex items-center justify-between">
-              <div class="flex items-center flex-grow min-w-0 mr-4">
-                <div class="text-center mr-5 flex-shrink-0">
-                  <div class="text-3xl font-bold text-blue-500">{index + 1}</div>
-                  <div class="text-xs text-gray-400">CLASSEMENT</div>
+              <div class="flex items-center flex-grow min-w-0 mr-2 sm:mr-4">
+                
+                <div class="text-center mr-3 sm:mr-5 flex-shrink-0">
+                  <div class="text-2xl sm:text-3xl font-bold text-blue-500">{index + 1}</div>
+                  <div class="text-xs text-gray-400 hidden sm:block">CLASSEMENT</div>
                 </div>
+
                 <div class="min-w-0">
-                  <p class="text-lg text-gray-800 leading-tight truncate">{idea.idea}</p>
+                  <p class="text-base sm:text-lg text-gray-800 leading-tight truncate">{idea.idea}</p>
                   <span class="text-xs text-gray-500">
-                    Proposé par <strong>{idea.author}</strong> le {new Date(idea.created_at).toLocaleDateString('fr-FR')}
+                    Proposé par <strong>{idea.author}</strong>
+                    <span class="hidden sm:inline">le {new Date(idea.created_at).toLocaleDateString('fr-FR')}</span>
                   </span>
                 </div>
               </div>
               
               <button 
                 on:click={() => handleVote(idea.id)}
-                class="flex flex-col items-center justify-center p-2 rounded-lg transition-colors w-16 flex-shrink-0 {idea.voted ? 'bg-blue-100 cursor-not-allowed' : 'hover:bg-gray-100'}"
+                class="flex flex-col items-center justify-center p-2 rounded-lg transition-colors w-14 sm:w-16 flex-shrink-0 {idea.voted ? 'bg-blue-100 cursor-not-allowed' : 'hover:bg-gray-100'}"
                 disabled={idea.voted}
                 title={idea.voted ? 'Vous pourrez voter à nouveau dans 15 minutes' : 'Voter pour cette idée'}
               >
-                <span class="text-2xl {idea.voted ? 'text-blue-600' : 'text-gray-600'}">▲</span>
-                <span class="text-xl font-bold text-blue-600">{idea.votes}</span>
+                <span class="text-xl sm:text-2xl {idea.voted ? 'text-blue-600' : 'text-gray-600'}">▲</span>
+                <span class="text-lg sm:text-xl font-bold text-blue-600">{idea.votes}</span>
               </button>
             </div>
 

@@ -9,7 +9,7 @@
 <main class="container p-4 mx-auto flex flex-col items-center">
   <header class="text-center mb-6">
       <a href="/idees">
-        <img src="/src/lib/assets/logo-hopital.png" alt="Logo Hôpital de Bagnols-sur-Cèze" class="h-16 mx-auto mb-4"/>
+        <img src="/images/logo-hopital.png" alt="Logo Hôpital de Bagnols-sur-Cèze" class="h-16 mx-auto mb-4"/>
       </a>
   </header>
   

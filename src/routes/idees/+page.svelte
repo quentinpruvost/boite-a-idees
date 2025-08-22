@@ -81,7 +81,7 @@
   <div class="max-w-3xl mx-auto">
     
     <header class="text-center mb-10">
-      <img src="/src/lib/assets/logo-hopital.png" alt="Logo Hôpital de Bagnols-sur-Cèze" class="h-16 mx-auto mb-4"/>
+      <img src="/images/logo-hopital.png" alt="Logo Hôpital de Bagnols-sur-Cèze" class="h-16 mx-auto mb-4"/>
       <h1 class="text-3xl sm:text-4xl font-bold text-hospital-blue">
         Boîte à Idées du Personnel
       </h1>

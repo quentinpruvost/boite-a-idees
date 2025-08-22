@@ -81,11 +81,9 @@
   <div class="max-w-3xl mx-auto">
     
     <div class="flex flex-col items-center gap-4 mb-8 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:gap-4 sm:w-full">
-      
       <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 text-center order-1">
         Classement des Idées
       </h1>
-
       <div class="flex justify-center sm:justify-start order-2 sm:order-none sm:col-start-1">
         <a href="/" class="bg-white px-4 py-2 rounded-lg shadow-md text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors whitespace-nowrap">
           ← Proposer une idée
@@ -104,16 +102,15 @@
       <div class="space-y-4">
         {#each ideas as idea, index (idea.id)}
           <div class="bg-white p-5 rounded-xl shadow-lg">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center flex-grow min-w-0 mr-2 sm:mr-4">
-                
-                <div class="text-center mr-3 sm:mr-5 flex-shrink-0">
+            <div class="flex items-start justify-between">
+              <div class="flex items-start flex-grow min-w-0 mr-2 sm:mr-4">
+                <div class="text-center mr-3 sm:mr-5 flex-shrink-0 pt-1">
                   <div class="text-2xl sm:text-3xl font-bold text-blue-500">{index + 1}</div>
                   <div class="text-xs text-gray-400 hidden sm:block">CLASSEMENT</div>
                 </div>
 
                 <div class="min-w-0">
-                  <p class="text-base sm:text-lg text-gray-800 leading-tight truncate">{idea.idea}</p>
+                  <p class="text-base sm:text-lg text-gray-800 leading-tight">{idea.idea}</p>
                   <span class="text-xs text-gray-500">
                     Proposé par <strong>{idea.author}</strong>
                     <span class="hidden sm:inline">le {new Date(idea.created_at).toLocaleDateString('fr-FR')}</span>

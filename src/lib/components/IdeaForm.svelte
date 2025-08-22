@@ -10,12 +10,12 @@
 
   // Élément pour l'animation du message de succès
   /** @type {HTMLElement} */
-let successMessage;
+  let successMessage;
 
   // Fonction appelée à la soumission du formulaire
   const handleSubmit = async () => {
     if (!idea) {
-      alert('Veuillez entrer une idée !');
+      alert("Veuillez décrire votre idée avant de l'envoyer.");
       return;
     }
 
@@ -37,12 +37,8 @@ let successMessage;
       formSubmitted = true;
       gsap.fromTo(successMessage, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
 
-      setTimeout(() => {
-        idea = '';
-        author = '';
-        isAnonymous = false;
-        formSubmitted = false;
-      }, 3000);
+      // On ne réinitialise pas le formulaire pour que l'utilisateur voie le message de succès
+      // L'état `formSubmitted` gère l'affichage.
 
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'idée :", error);
@@ -51,56 +47,68 @@ let successMessage;
   };
 
   onMount(() => {
+    // Animation d'entrée pour le formulaire
     gsap.from('form', { opacity: 0, y: 50, duration: 0.8, ease: 'power3.out' });
   });
 </script>
 
 {#if !formSubmitted}
-  <form on:submit|preventDefault={handleSubmit} class="w-full max-w-lg p-10 space-y-6 bg-white rounded-2xl shadow-2xl transition-all duration-300">
+  <form on:submit|preventDefault={handleSubmit} class="w-full max-w-lg space-y-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl transition-all duration-300 overflow-hidden">
     
-    <h2 class="text-3xl font-bold text-center text-slate-800 mb-8">Votre Idée Compte ! ✨</h2>
-
-    <div>
-      <label for="idea" class="block mb-2 text-sm font-semibold text-gray-700">Décrivez votre idée :</label>
-      <textarea
-        id="idea"
-        bind:value={idea}
-        rows="4"
-        class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300"
-        placeholder="Proposez une amélioration, un événement..."
-      ></textarea>
+    <div class="bg-hospital-blue text-white p-6">
+       <h2 class="text-2xl font-bold text-center">Proposer une Idée</h2>
     </div>
 
-    {#if !isAnonymous}
-      <div>
-        <label for="author" class="block mb-2 text-sm font-semibold text-gray-700">Votre nom (optionnel) :</label>
-        <input
-          type="text"
-          id="author"
-          bind:value={author}
-          class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300"
-          placeholder="Jean Dupont"
-        />
-      </div>
-    {/if}
+    <div class="p-6 sm:p-8 space-y-6">
+        <div>
+          <label for="idea" class="block mb-2 text-sm font-semibold text-gray-700">Votre idée d'amélioration :</label>
+          <textarea 
+            id="idea" 
+            bind:value={idea} 
+            rows="4" 
+            class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-hospital-blue/20 focus:border-hospital-blue transition-all duration-300" 
+            placeholder="Décrivez votre proposition..."
+            required
+          ></textarea>
+        </div>
 
-    <div class="flex items-center pt-2">
-      <input
-        id="anonymous"
-        type="checkbox"
-        bind:checked={isAnonymous}
-        class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-      />
-      <label for="anonymous" class="ml-3 text-sm font-medium text-gray-900">Soumettre en anonyme</label>
+        {#if !isAnonymous}
+          <div>
+            <label for="author" class="block mb-2 text-sm font-semibold text-gray-700">Votre nom (ou service) :</label>
+            <input 
+              type="text" 
+              id="author" 
+              bind:value={author}
+              placeholder="Ex: Jean Dupont, Service Radiologie"
+              class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-hospital-blue/20 focus:border-hospital-blue transition-all duration-300"
+            />
+          </div>
+        {/if}
+
+        <div class="flex items-center pt-2">
+          <input 
+            id="anonymous" 
+            type="checkbox" 
+            bind:checked={isAnonymous} 
+            class="w-5 h-5 text-hospital-blue bg-gray-100 border-gray-300 rounded focus:ring-hospital-blue focus:ring-2"
+          />
+          <label for="anonymous" class="ml-3 text-sm font-medium text-gray-900">Soumettre en anonyme</label>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full px-4 py-3 font-bold text-white bg-hospital-green rounded-lg hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-hospital-green/50 transition-all duration-300"
+        >
+          Envoyer mon Idée
+        </button>
     </div>
-
-    <button type="submit" class="w-full px-4 py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      Proposer mon Idée
-    </button>
   </form>
 {:else}
-  <div bind:this={successMessage} class="w-full max-w-lg p-8 text-center bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-green-600">Merci ! 🙏</h2>
-    <p class="mt-2 text-gray-700">Votre idée a bien été envoyée.</p>
+  <div bind:this={successMessage} class="w-full max-w-lg p-8 text-center bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl">
+    <h2 class="text-2xl font-bold text-hospital-green">Merci pour votre contribution !</h2>
+    <p class="mt-2 text-slate-700">Votre idée a bien été enregistrée et sera étudiée.</p>
+    <a href="/idees" class="inline-block mt-6 font-semibold text-hospital-blue hover:underline">
+      Voir toutes les idées →
+    </a>
   </div>
 {/if}

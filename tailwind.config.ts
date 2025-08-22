@@ -6,8 +6,17 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Ajoute la police 'Inter' à la pile de polices sans-serif
         sans: ['Inter', ...fontFamily.sans],
+      },
+      colors: {
+        'hospital-blue': {
+          DEFAULT: '#005A9E', // Bleu institutionnel
+          light: '#E6F0F6',
+        },
+        'hospital-green': {
+          DEFAULT: '#009A7F', // Vert médical / Action
+          light: '#E6F5F3',
+        },
       },
     },
   },

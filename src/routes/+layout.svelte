@@ -9,6 +9,11 @@
   <link rel="icon" href="{favicon}" />
 </svelte:head>
 
-<main class="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-blue-100">
-  {@render children?.()}
-</main>
+<div
+  class="fixed inset-0 z-[-1] bg-cover bg-center blur"
+  style="background-image: url('/images/background-hopital.jpg');"
+></div>
+
+<div class="fixed inset-0 z-[-1] bg-white/80"></div>
+
+{@render children?.()}
